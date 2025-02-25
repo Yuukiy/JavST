@@ -502,10 +502,12 @@ def RunNormalMode(all_movies):
                                 elapsed = time.strftime("%M:%S", time.gmtime(info['elapsed']))
                                 speed = get_fmt_size(info['rate']) + '/s'
                                 logger.info(f"已下载剧照{pic_url} {id}.png: {width}x{height}, {filesize} [{elapsed}, {speed}]")
-                            else:
+                            else:                               
                                 check_step(False, f"下载剧照{id}: {pic_url}失败")
                         except:
-                            check_step(False, f"下载剧照{id}: {pic_url}失败")
+                            # 下载失败，不要在rasise exception，跳过，从而不打断整理
+                            logger.error(f"下载剧照{id}: {pic_url}失败")
+                            # check_step(False, f"下载剧照{id}: {pic_url}失败")
                         time.sleep(scrape_interval)
                 check_step(True)
 
